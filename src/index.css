@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background-color: #FDFAF5;
+    color: #3D2C24;
+    overflow-x: hidden;
+  }
+  ::selection { background: #FAD8E2; color: #3D2C24; }
+  :focus-visible { outline: 3px solid #C9446A; outline-offset: 3px; }
+}
+
+@layer components {
+  .section-label {
+    @apply inline-block text-xs font-semibold tracking-widest uppercase text-rose bg-rose-pale border-2 border-brown px-3 py-1.5 shadow-brutal;
+  }
+  .section-heading {
+    @apply font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-brown leading-tight;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-rose text-white font-semibold text-sm px-6 py-3 border-2 border-brown shadow-brutal
+           hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all duration-150 cursor-pointer;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 bg-cream-dark text-brown font-semibold text-sm px-6 py-3 border-2 border-brown shadow-brutal
+           hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all duration-150 cursor-pointer;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 bg-transparent text-brown font-semibold text-sm px-6 py-3 border-2 border-brown shadow-brutal
+           hover:bg-cream-dark hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg transition-all duration-150 cursor-pointer;
+  }
+  .card-brutal {
+    @apply bg-white border-2 border-brown shadow-brutal hover:-translate-x-1 hover:-translate-y-1 hover:shadow-brutal-lg transition-all duration-150;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #FFF0F4; }
+::-webkit-scrollbar-thumb { background: #C9446A; border-radius: 3px; }
+
+/* Fade-up animation for IntersectionObserver */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Stagger children */
+.stagger-children > *:nth-child(1) { transition-delay: 0.05s; }
+.stagger-children > *:nth-child(2) { transition-delay: 0.1s; }
+.stagger-children > *:nth-child(3) { transition-delay: 0.15s; }
+.stagger-children > *:nth-child(4) { transition-delay: 0.2s; }
+.stagger-children > *:nth-child(5) { transition-delay: 0.25s; }
+.stagger-children > *:nth-child(6) { transition-delay: 0.3s; }
+.stagger-children > *:nth-child(7) { transition-delay: 0.35s; }
+.stagger-children > *:nth-child(8) { transition-delay: 0.4s; }
+.stagger-children > *:nth-child(9) { transition-delay: 0.45s; }
+.stagger-children > *:nth-child(10) { transition-delay: 0.5s; }
