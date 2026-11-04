@@ -1,12 +1,8 @@
 {
-  "name": "darlene-waldrop-portfolio",
-  "private": true,
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-  "dev": "vite",
-  "build": "node ./node_modules/vite/bin/vite.js build",
-  "preview": "vite preview"
+  "name": "darlene-react",
+  "version": "0.1.0",
+  "engines": {
+    "node": "20.x"
 }
 
   },
