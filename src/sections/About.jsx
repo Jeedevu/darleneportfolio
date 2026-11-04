@@ -1,75 +1,80 @@
-import { useReveal } from '../hooks/useReveal'
-import { IMAGES } from '../data/images'
+import { useReveal, useRevealGroup } from '../hooks/useReveal'
 
 export default function About() {
-  const ref = useReveal()
+  const ref = useRevealGroup()
 
   return (
-    <section id="about" className="bg-[#FAF6EF] border-b-2 border-brown py-24">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div ref={ref} className="reveal grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+    <section id="about" className="bg-blush overflow-hidden relative">
 
-          {/* Images */}
-          <div className="relative flex justify-center">
-            {/* Main image */}
-            <div className="border-2 border-brown shadow-brutal-lg overflow-hidden bg-beige"
-              style={{ width: 'min(400px, 100%)', aspectRatio: '3/4' }}>
-              <img src={IMAGES.aboutMain} alt="Darlene Waldrop editorial portrait"
-                className="w-full h-full object-cover hover:scale-[1.03] transition-transform duration-500" />
-            </div>
-            {/* Accent image - offset */}
-            <div className="absolute bottom-[-2rem] right-0 md:right-[-2rem] border-2 border-brown shadow-brutal overflow-hidden bg-rose-pale hidden sm:block"
-              style={{ width: '42%', aspectRatio: '1' }}>
-              <img src={IMAGES.aboutAccent} alt="Darlene Waldrop casual portrait"
-                className="w-full h-full object-cover object-top" />
-            </div>
-            {/* Stats card */}
-            <div className="absolute top-6 right-0 md:right-[-2rem] bg-rose text-white border-2 border-brown shadow-brutal p-4 flex gap-4 items-center z-10">
-              <div className="text-center">
-                <strong className="block font-serif text-2xl font-black leading-none">50s</strong>
-                <span className="text-xs opacity-90">& Thriving</span>
-              </div>
-              <div className="w-px h-10 bg-white/40" />
-              <div className="text-center">
-                <strong className="block font-serif text-2xl font-black leading-none">10+</strong>
-                <span className="text-xs opacity-90">Categories</span>
-              </div>
-            </div>
+      {/* Watermark */}
+      <span className="watermark watermark-dark bottom-0 right-[-2%] opacity-40 pointer-events-none z-0"
+        aria-hidden="true">ABOUT</span>
+
+      <div ref={ref} className="relative z-10 max-w-[1340px] mx-auto px-6 lg:px-10
+                                grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] gap-0 min-h-screen items-stretch">
+
+        {/* LEFT IMAGE BLOCK */}
+        <div className="relative h-[60vh] lg:h-auto">
+          {/* Main image — full bleed */}
+          <div className="reveal-left h-full img-zoom gallery-cursor">
+            <img src="/images/IMG_0868.JPEG"
+              alt="Darlene Waldrop editorial portrait"
+              className="w-full h-full object-cover object-top" />
           </div>
 
-          {/* Content */}
-          <div>
-            <span className="section-label mb-4 block w-fit">Get to Know Me</span>
-            <h2 className="section-heading mb-6">A Little About Me</h2>
+          {/* Accent image offset */}
+          <div className="reveal delay-2 absolute -bottom-8 -right-6 lg:-right-12 w-[42%] aspect-[3/4] overflow-hidden
+                          border-4 border-blush shadow-2xl z-20 img-zoom hidden sm:block">
+            <img src="/images/denim pic.JPEG" alt="Darlene casual lifestyle"
+              className="w-full h-full object-cover object-top" />
+          </div>
 
-            <div className="space-y-4 text-taupe leading-relaxed">
-              <p>
-                I'm <strong className="text-brown font-semibold">Darlene Waldrop</strong>, a lifestyle and UGC creator who believes
-                that life becomes even more exciting when you stay curious, try new things, and never stop discovering who you can be.
-              </p>
-              <p>
-                My content reflects the many sides of everyday life — from beauty and fashion to fitness, home and kitchen
-                discoveries, shopping, honest product reviews, and dating adventures.
-              </p>
-              <p>
-                What makes my approach different is my perspective. As a woman in my 50s, I bring life experience,
-                authenticity, and a point of view that resonates with mature audiences while remaining relatable across generations.
-              </p>
-              <p>
-                For me, content creation is about understanding the story behind a product, communicating its value,
-                and helping brands build genuine connections with their audiences.
-              </p>
-              <blockquote className="border-l-4 border-rose pl-4 italic text-rose text-[1.05rem] my-5">
-                I'm here to keep exploring, keep creating, and show that there's no age limit on trying something new.
-              </blockquote>
-            </div>
+          {/* Stats chip */}
+          <div className="reveal delay-3 absolute top-8 right-4 lg:-right-8 bg-espresso text-cream px-6 py-5 z-30">
+            <div className="font-display font-black text-gold text-3xl leading-none">50s</div>
+            <div className="text-overline text-cream/50 mt-1 tracking-widest">& Thriving</div>
+            <div className="rule-gold my-3" />
+            <div className="font-display font-black text-gold text-3xl leading-none">10+</div>
+            <div className="text-overline text-cream/50 mt-1 tracking-widest">Niches</div>
+          </div>
+        </div>
 
-            <div className="flex gap-3 flex-wrap mt-8">
-              <a href="#contact" onClick={e => { e.preventDefault(); const el = document.querySelector('#contact'); if(el) window.scrollTo({top: el.offsetTop-74, behavior:'smooth'}) }}
-                className="btn-primary">Let's Work Together</a>
-              <a href="#services" onClick={e => { e.preventDefault(); const el = document.querySelector('#services'); if(el) window.scrollTo({top: el.offsetTop-74, behavior:'smooth'}) }}
-                className="btn-ghost">View Services</a>
-            </div>
+        {/* RIGHT CONTENT */}
+        <div className="flex flex-col justify-center px-0 lg:pl-20 py-section">
+          <div className="reveal mb-6">
+            <span className="overline-label" style={{color:'#1F1A17', opacity:0.6}}>Get To Know Me</span>
+          </div>
+
+          <h2 className="reveal delay-1 heading-section text-espresso mb-8">
+            A Little<br/><em className="font-script font-normal not-italic text-choco">About Me</em>
+          </h2>
+
+          <div className="reveal delay-2 space-y-5 text-espresso/70 font-sans font-light leading-relaxed max-w-lg">
+            <p>
+              I'm <strong className="font-semibold text-espresso">Darlene Waldrop</strong>, a lifestyle and UGC creator who believes
+              life becomes more exciting when you stay curious and never stop discovering who you can be.
+            </p>
+            <p>
+              From beauty and fashion to fitness, home discoveries, honest product reviews, and dating adventures —
+              my content reflects the many authentic sides of everyday life.
+            </p>
+            <p>
+              As a woman in my 50s, I bring life experience and a perspective that resonates with mature audiences
+              while remaining relatable across generations. For me, content is about the story behind the product.
+            </p>
+          </div>
+
+          <blockquote className="reveal delay-3 border-l-2 border-gold pl-6 mt-8 mb-10">
+            <p className="font-script text-2xl text-choco italic leading-snug">
+              "No age limit on trying something new."
+            </p>
+          </blockquote>
+
+          <div className="reveal delay-4 flex gap-4 flex-wrap">
+            <button onClick={() => { const el = document.querySelector('#contact'); if(el) window.scrollTo({top:el.offsetTop-72,behavior:'smooth'}) }}
+              className="btn-dark">Let's Work Together</button>
+            <button onClick={() => { const el = document.querySelector('#services'); if(el) window.scrollTo({top:el.offsetTop-72,behavior:'smooth'}) }}
+              className="btn-outline-dark">View Services</button>
           </div>
         </div>
       </div>

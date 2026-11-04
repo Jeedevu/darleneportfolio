@@ -1,60 +1,65 @@
 import { useRevealGroup } from '../hooks/useReveal'
 
 const SERVICES = [
-  { num: '01', title: 'UGC Video Creation', desc: 'Professional user-generated content for brands that need engaging, creator-led videos.', items: ['Product unboxings and first impressions','Product demonstrations and tutorials','Testimonials and experience-based storytelling','Lifestyle integrations','Beauty, fashion, home, and fitness content','Hooks and concept development','Voiceovers and on-camera presentations'] },
-  { num: '02', title: 'UGC for Paid Advertisements', desc: 'Creator-led videos designed for paid advertising campaigns with messaging tailored to the objective.', items: ['Product-focused ad concepts','Problem-and-solution storytelling','Product demonstrations','Multiple hook options where agreed','On-camera and voiceover delivery'], note: 'Paid advertising usage rights must be agreed upon separately.' },
-  { num: '03', title: 'Influencer Collaborations', desc: 'Brand partnerships involving publishing content on agreed social media channels.', items: ['Sponsored short-form videos','Instagram Reels and Stories','TikTok videos','YouTube Shorts','Product features and recommendations','Campaign-specific content packages'] },
-  { num: '04', title: 'Product Reviews & Demonstrations', desc: 'Content that introduces a product, explains its features, demonstrates its use, and shares a genuine perspective based on actual experience.' },
-  { num: '05', title: 'Commercial Shoots & Brand Films', desc: 'On-camera participation in commercial productions and brand storytelling.', items: ['Commercial advertisements','Brand promotional videos','Product campaigns','Lifestyle advertisements','Website and landing-page videos','Company and brand storytelling'] },
-  { num: '06', title: 'Modeling & Brand Photography', desc: 'Available for suitable projects involving on-camera and photography work.', items: ['Lifestyle modeling','Fashion and apparel photography','Beauty and skincare campaigns','Product photography featuring a model','E-commerce imagery','Promotional and editorial shoots'] },
-  { num: '07', title: 'Fashion Shows & Runway', desc: 'Open to suitable opportunities aligned with style and professional profile.', items: ['Runway appearances','Fashion shows','Designer presentations','Fashion brand launches','Promotional fashion events'] },
-  { num: '08', title: 'Lifestyle & Everyday Content', desc: 'Relatable content built around real-life experiences.', items: ['Daily routines','Shopping and product discoveries','Home organization and cleaning','Kitchen products and household essentials','Fitness and wellness routines','Beauty and personal style'] },
-  { num: '09', title: 'Photography Packages', desc: 'Lifestyle and product-focused photography for diverse campaign needs.', items: ['Social media campaigns','Brand websites','Product features','Creator collaborations','Promotional campaigns'] },
-  { num: '10', title: 'Event Appearances & Brand Activations', desc: 'Participation in suitable events, promotional activities, brand launches, and creator activations.' },
+  { num:'01', title:'UGC Video Creation',           items:['Product unboxings & first impressions','Demonstrations and tutorials','Testimonials & storytelling','Lifestyle integrations','Hooks and concept development'] },
+  { num:'02', title:'UGC for Paid Advertising',     items:['Conversion-oriented ad concepts','Problem & solution storytelling','Multiple hook options','On-camera and voiceover delivery'], note:'Ad rights negotiated separately.' },
+  { num:'03', title:'Influencer Collaborations',    items:['Sponsored short-form videos','Instagram Reels & Stories','TikTok videos','YouTube Shorts','Campaign content packages'] },
+  { num:'04', title:'Product Reviews & Demos',      desc:'Introducing a product, explaining its features, demonstrating its use, and sharing a genuine perspective based on real experience.' },
+  { num:'05', title:'Commercial Shoots & Brand Films', items:['Commercial advertisements','Promotional videos','Lifestyle campaigns','Website & landing-page videos','Brand storytelling'] },
+  { num:'06', title:'Modeling & Brand Photography', items:['Lifestyle modeling','Fashion & apparel photography','Beauty & skincare campaigns','E-commerce imagery','Editorial shoots'] },
+  { num:'07', title:'Fashion Shows & Runway',       items:['Runway appearances','Fashion shows','Designer presentations','Brand launches','Promotional fashion events'] },
+  { num:'08', title:'Lifestyle & Everyday Content', items:['Daily routines','Shopping discoveries','Home organization & cleaning','Kitchen & household essentials','Fitness & wellness'] },
+  { num:'09', title:'Photography Packages',         items:['Social media campaigns','Brand websites','Product features','Creator collaborations','Promotional campaigns'] },
+  { num:'10', title:'Event Appearances & Activations', desc:'Participation in brand events, product launches, promotional activities, and creator activations.' },
 ]
 
 export default function Services() {
   const ref = useRevealGroup()
 
   return (
-    <section id="services" className="bg-beige/20 border-b-2 border-brown py-24">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span className="section-label mb-4 block w-fit mx-auto">What's Available</span>
-          <h2 className="section-heading mb-4">Services & Creative Opportunities</h2>
-          <p className="text-taupe max-w-2xl mx-auto leading-relaxed">
-            Every brand has a different story to tell. My services accommodate a range of creative briefs —
-            from individual product videos to larger campaigns.
-          </p>
+    <section id="services" className="bg-cream relative overflow-hidden py-section">
+      <span className="watermark watermark-dark top-0 left-[-2%] pointer-events-none z-0" aria-hidden="true">SERVICES</span>
+
+      <div className="relative z-10 max-w-[1340px] mx-auto px-6 lg:px-10">
+
+        <div className="text-center mb-16">
+          <span className="overline-label justify-center mb-5 block" style={{color:'#1F1A17',opacity:.5}}>What's Available</span>
+          <h2 className="heading-section text-espresso">
+            Services &amp; Creative<br/><em className="font-script not-italic text-choco">Opportunities</em>
+          </h2>
         </div>
 
-        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 stagger-children">
-          {SERVICES.map((s) => (
-            <div key={s.num} className="reveal card-brutal bg-white p-6">
-              <div className="flex items-start gap-4 mb-3 pb-3 border-b-2 border-beige">
-                <span className="font-serif text-[2rem] font-black text-rose-light leading-none flex-shrink-0">{s.num}</span>
-                <h3 className="font-serif font-bold text-brown text-[0.98rem] leading-snug pt-1">{s.title}</h3>
+        <div ref={ref} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-espresso/5">
+          {SERVICES.map((s, i) => (
+            <div key={i}
+              className={`reveal delay-${Math.min((i%6)+1,6)} p-8 bg-cream hover:bg-blush transition-colors duration-500 group`}>
+              <div className="flex items-start gap-4 mb-4 pb-4 border-b border-espresso/8">
+                <span className="font-display font-black text-blush-mid text-4xl leading-none flex-shrink-0 group-hover:text-gold transition-colors duration-400">
+                  {s.num}
+                </span>
+                <h3 className="font-display font-bold text-espresso text-lg leading-snug pt-2 group-hover:text-choco transition-colors duration-300">
+                  {s.title}
+                </h3>
               </div>
-              <p className="text-[0.85rem] text-taupe leading-relaxed mb-3">{s.desc}</p>
+              {s.desc && <p className="text-espresso/55 font-sans font-light text-sm leading-relaxed">{s.desc}</p>}
               {s.items && (
-                <ul className="space-y-1">
-                  {s.items.map((item, i) => (
-                    <li key={i} className="text-[0.82rem] text-taupe flex items-start gap-2 border-b border-beige/60 pb-1">
-                      <span className="text-rose text-[0.65rem] mt-0.5 flex-shrink-0">✦</span>
+                <ul className="space-y-1.5">
+                  {s.items.map((item, j) => (
+                    <li key={j} className="flex items-start gap-2 text-espresso/55 font-sans text-sm">
+                      <span className="text-gold text-xs mt-0.5 flex-shrink-0">✦</span>
                       {item}
                     </li>
                   ))}
                 </ul>
               )}
-              {s.note && <p className="mt-3 text-[0.76rem] italic text-rose bg-rose-pale border-l-4 border-rose pl-3 py-1">{s.note}</p>}
+              {s.note && <p className="mt-4 text-xs italic text-gold/80 border-l-2 border-gold pl-3">{s.note}</p>}
             </div>
           ))}
         </div>
 
-        <div className="text-center mt-10">
-          <a href="#contact"
-            onClick={e => { e.preventDefault(); const el = document.querySelector('#contact'); if(el) window.scrollTo({top: el.offsetTop-74, behavior:'smooth'}) }}
-            className="btn-primary">Request a Custom Quote</a>
+        <div className="text-center mt-12">
+          <button onClick={() => { const el=document.querySelector('#contact'); if(el) window.scrollTo({top:el.offsetTop-72,behavior:'smooth'}) }}
+            className="btn-dark">Request a Custom Quote</button>
         </div>
       </div>
     </section>

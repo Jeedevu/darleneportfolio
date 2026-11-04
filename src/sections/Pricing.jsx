@@ -1,100 +1,142 @@
 import { useState } from 'react'
-import { PRICING_TABS } from '../data/content'
+import { useRevealGroup } from '../hooks/useReveal'
+
+const TABS = [
+  {
+    id:'ugc', label:'UGC Videos',
+    cards:[
+      { price:'$175',   title:'Single UGC Video',      items:['30–60 sec video','Concept & hook','On-camera or voiceover','B-roll','1 revision','30-day organic rights'] },
+      { price:'$225',   title:'Advertising Video',      items:['Ad-focused concept','Conversion storytelling','Product demo','1 revision','30-day paid ad rights'] },
+      { price:'$450',   title:'3-Video Package',        badge:'Popular', items:['3 UGC videos','Concepts & hooks','Product storytelling','1 revision per video','Organic rights'] },
+      { price:'$800',   title:'5-Video Package',        items:['5 UGC videos','Concepts & hooks','Demos or lifestyle','1 revision each'] },
+      { price:'$1,350', title:'10-Video Package',       items:['10 UGC videos','Concepts & hooks','On-camera or VO','Demos & lifestyle','1 revision each'] },
+    ]
+  },
+  {
+    id:'social', label:'Social Media',
+    cards:[
+      { price:'$250',   title:'Instagram Reel',         items:['1 sponsored Reel'] },
+      { price:'$250',   title:'TikTok Video',           items:['1 sponsored TikTok'] },
+      { price:'$425',   title:'Instagram + TikTok',     badge:'Best Value', items:['1 video for both platforms'] },
+      { price:'$650',   title:'All 3 Platforms',        items:['Instagram + TikTok + YouTube Shorts'] },
+    ]
+  },
+  {
+    id:'photo', label:'Photography',
+    cards:[
+      { price:'$125',   title:'5 Photos',               items:['Lifestyle or product imagery'] },
+      { price:'$225',   title:'10 Photos',              items:['Mixed styles as agreed'] },
+      { price:'$400',   title:'20 Photos',              items:['Campaign or editorial images'] },
+      { price:'$125',   title:'3 Stories',              items:['Instagram story package'] },
+      { price:'$175',   title:'5 Stories',              items:['Campaign story package'] },
+    ]
+  },
+  {
+    id:'commercial', label:'Commercial',
+    cards:[
+      { price:'$400',      title:'Half-Day Shoot',      items:['Up to 4 hrs on-camera talent'] },
+      { price:'$700',      title:'Full-Day Shoot',      items:['Up to 8 hrs on-camera talent'] },
+      { price:'From $350', title:'Event Appearance',    items:['Up to 3 hrs · +$100/hr additional'] },
+    ]
+  },
+  {
+    id:'amazon', label:'Amazon',
+    cards:[
+      { price:'$150',   title:'Single Amazon Video',    items:['1 product-focused Amazon video'] },
+      { price:'$600',   title:'5-Video Amazon Pack',    badge:'Best Value', items:['5 product-focused Amazon videos'] },
+    ]
+  },
+]
+
+const go = (href) => { const el=document.querySelector(href); if(el) window.scrollTo({top:el.offsetTop-72,behavior:'smooth'}) }
 
 export default function Pricing() {
-  const [activeTab, setActiveTab] = useState('ugc')
-  const current = PRICING_TABS.find(t => t.id === activeTab)
-
-  const scrollContact = (e) => {
-    e.preventDefault()
-    const el = document.querySelector('#contact')
-    if (el) window.scrollTo({ top: el.offsetTop - 74, behavior: 'smooth' })
-  }
+  const [active, setActive] = useState('ugc')
+  const current = TABS.find(t => t.id === active)
+  const ref = useRevealGroup()
 
   return (
-    <section id="pricing" className="bg-[#FAF6EF] border-b-2 border-brown py-24">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div className="text-center mb-12">
-          <span className="section-label mb-4 block w-fit mx-auto">Rates & Packages</span>
-          <h2 className="section-heading mb-4">Packages & Rates</h2>
-          <p className="text-taupe max-w-2xl mx-auto leading-relaxed">
-            Every collaboration is different. The following rates provide a starting point for common content requests.
-            Custom packages available. <strong className="text-brown">All prices in USD.</strong>
+    <section id="pricing" className="bg-espresso relative overflow-hidden py-section">
+      <span className="watermark top-0 left-[-2%] pointer-events-none z-0" aria-hidden="true">RATES</span>
+
+      <div className="relative z-10 max-w-[1340px] mx-auto px-6 lg:px-10">
+
+        {/* Header */}
+        <div className="text-center mb-14">
+          <span className="overline-label justify-center text-gold/70 mb-5 block">Packages & Rates</span>
+          <h2 className="heading-display mb-4">
+            Invest in<br/><em className="font-script not-italic text-gold">Quality Content</em>
+          </h2>
+          <p className="text-cream/45 font-sans font-light max-w-xl mx-auto">
+            Starting prices in USD. Custom packages available. A 50% deposit confirms every project.
           </p>
         </div>
 
-        {/* Tabs */}
-        <div className="flex flex-wrap gap-2 justify-center mb-10">
-          {PRICING_TABS.map(tab => (
-            <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-              className={`text-[0.8rem] font-semibold px-4 py-2 border-2 border-brown transition-all duration-150 shadow-brutal
-                hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg
-                ${activeTab === tab.id ? 'bg-rose text-white' : 'bg-white text-brown'}`}>
-              {tab.label}
+        {/* Tab row */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {TABS.map(t => (
+            <button key={t.id} onClick={() => setActive(t.id)}
+              className={`text-overline font-sans uppercase tracking-[0.16em] px-6 py-3 transition-all duration-300
+                ${active === t.id ? 'bg-gold text-espresso' : 'border border-cream/15 text-cream/50 hover:text-cream hover:border-cream/40'}`}>
+              {t.label}
             </button>
           ))}
         </div>
 
-        {/* Panels */}
-        <div key={activeTab} className="animate-fade-in">
-          {current?.cards && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-              {current.cards.map((card, i) => (
-                <div key={i} className={`card-brutal p-6 flex flex-col gap-4 relative
-                  ${card.featured ? 'border-rose shadow-brutal-rose bg-rose-blush' : 'bg-white'}`}>
-                  {card.badge && (
-                    <span className="absolute -top-px right-5 bg-rose text-white text-[0.6rem] font-bold tracking-widest uppercase px-2.5 py-1 border-2 border-brown border-t-0">
-                      {card.badge}
-                    </span>
-                  )}
-                  <div className="font-serif text-[2.2rem] font-black text-rose leading-none">{card.price}</div>
-                  <h3 className="font-serif font-bold text-brown text-[1rem]">{card.title}</h3>
-                  <ul className="flex-1 space-y-1.5">
-                    {card.items.map((item, j) => (
-                      <li key={j} className="text-[0.83rem] text-taupe flex items-start gap-2 border-b border-rose-pale pb-1.5">
-                        <span className="text-rose font-bold mt-0.5 flex-shrink-0">✓</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <a href="#contact" onClick={scrollContact}
-                    className={`btn-sm text-center justify-center ${card.featured ? 'btn-primary' : 'btn-ghost'}`}
-                    style={{ display: 'flex', fontSize: '0.8rem', padding: '0.55rem 1rem' }}>
-                    Get Started
-                  </a>
-                </div>
-              ))}
+        {/* Cards */}
+        <div key={active} ref={ref}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 animate-fade-in">
+          {current?.cards.map((card, i) => (
+            <div key={i}
+              className={`reveal delay-${Math.min(i+1,6)} price-card-hover relative p-8 flex flex-col gap-5 border border-cream/8
+                ${i === 2 ? 'bg-choco border-gold/30' : 'bg-espresso-light'}`}>
+              {card.badge && (
+                <span className="absolute top-4 right-4 bg-gold text-espresso text-[0.58rem] font-bold uppercase tracking-widest px-2.5 py-1">
+                  {card.badge}
+                </span>
+              )}
+              <div className="font-display font-black text-gold text-4xl leading-none">{card.price}</div>
+              <h3 className="font-display font-bold text-cream text-lg leading-snug">{card.title}</h3>
+              <ul className="flex-1 space-y-2 border-t border-cream/8 pt-4">
+                {card.items.map((item, j) => (
+                  <li key={j} className="flex items-start gap-2 text-cream/50 font-sans text-sm">
+                    <span className="text-gold text-xs mt-0.5 flex-shrink-0">✦</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={() => go('#contact')}
+                className="text-overline text-gold font-sans uppercase tracking-widest text-left
+                           hover:text-cream transition-colors duration-300 flex items-center gap-2 mt-2">
+                Get Started <span className="text-xs">→</span>
+              </button>
             </div>
-          )}
-
-          {current?.addons && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-              {current.addons.map((addon, i) => (
-                <div key={i} className="card-brutal bg-white p-5">
-                  <h3 className="font-serif font-bold text-brown text-[0.95rem] mb-3 pb-2 border-b-2 border-rose-pale">{addon.title}</h3>
-                  <ul className="space-y-1">
-                    {addon.items.map((item, j) => (
-                      <li key={j} className="text-[0.83rem] text-taupe">{item}</li>
-                    ))}
-                  </ul>
-                  {addon.note && <p className="text-[0.75rem] italic text-rose mt-2">{addon.note}</p>}
-                </div>
-              ))}
-            </div>
-          )}
+          ))}
         </div>
 
-        {/* Disclaimer */}
-        <div className="mt-10 p-5 bg-beige/40 border-2 border-brown shadow-brutal">
-          <p className="text-[0.83rem] text-taupe text-center leading-relaxed">
-            A 50% deposit is required to confirm a project. Standard delivery is approximately 5–7 business days.
-            All rates are starting prices in USD and may vary based on project brief, production requirements, and licensing.
-            A written quote will confirm final deliverables and terms.
-          </p>
+        {/* Add-ons strip */}
+        <div className="mt-14 p-8 border border-cream/8 bg-choco">
+          <h3 className="font-display font-bold text-cream text-xl mb-6">Optional Add-Ons</h3>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-6">
+            {[
+              { label:'Paid Ad Usage',    val:'30d +30% · 90d +50%' },
+              { label:'Whitelisting',     val:'From $250/mo' },
+              { label:'Raw Footage',      val:'+$100–$300' },
+              { label:'Extra Hooks',      val:'+$50–$75' },
+              { label:'Rush 48hr',        val:'+$75' },
+              { label:'Rush 24hr',        val:'+$125' },
+              { label:'Exclusivity',      val:'+$150–$300' },
+            ].map(a => (
+              <div key={a.label}>
+                <div className="text-overline text-gold/60 mb-1">{a.label}</div>
+                <div className="font-sans text-cream/70 text-sm">{a.val}</div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div className="text-center mt-8">
-          <a href="#contact" onClick={scrollContact} className="btn-primary">Request a Custom Quote</a>
+        <div className="text-center mt-10">
+          <button onClick={() => go('#contact')} className="btn-primary">Request a Custom Quote</button>
         </div>
       </div>
     </section>

@@ -12,59 +12,43 @@ export default function Lightbox({ images, currentIndex, onClose, onPrev, onNext
   useEffect(() => {
     document.addEventListener('keydown', handleKey)
     document.body.style.overflow = 'hidden'
-    return () => {
-      document.removeEventListener('keydown', handleKey)
-      document.body.style.overflow = ''
-    }
+    return () => { document.removeEventListener('keydown', handleKey); document.body.style.overflow = '' }
   }, [handleKey])
 
   if (!current) return null
 
   return (
     <>
-      {/* Backdrop */}
-      <div
-        className="fixed inset-0 bg-brown/90 z-[2000]"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0 bg-espresso/96 z-[2000]" onClick={onClose} />
+      <div className="fixed inset-0 z-[2001] flex items-center justify-center gap-6 p-4"
+        role="dialog" aria-modal="true">
 
-      {/* Lightbox */}
-      <div className="fixed inset-0 z-[2001] flex items-center justify-center p-4 gap-4"
-        role="dialog" aria-modal="true" aria-label="Image viewer">
-
-        {/* Close */}
         <button onClick={onClose} aria-label="Close"
-          className="fixed top-5 right-5 w-10 h-10 bg-white border-2 border-brown flex items-center justify-center
-                     hover:bg-rose-pale transition-colors z-[2002]">
-          <i className="fas fa-times text-brown" />
+          className="fixed top-6 right-6 w-10 h-10 border border-cream/20 flex items-center justify-center
+                     text-cream/60 hover:text-gold hover:border-gold transition-all duration-300 z-[2002]">
+          <i className="fas fa-times text-sm" />
         </button>
 
-        {/* Prev */}
-        <button onClick={onPrev} aria-label="Previous image"
-          className="flex-shrink-0 w-11 h-11 bg-white border-2 border-brown flex items-center justify-center
-                     hover:bg-rose-pale transition-colors hover:-translate-x-0.5 hover:shadow-brutal">
-          <i className="fas fa-chevron-left text-brown" />
+        <button onClick={onPrev} aria-label="Previous"
+          className="flex-shrink-0 w-11 h-11 border border-cream/15 flex items-center justify-center
+                     text-cream/40 hover:text-gold hover:border-gold transition-all duration-300">
+          <i className="fas fa-chevron-left text-sm" />
         </button>
 
-        {/* Image */}
         <div className="flex flex-col items-center max-w-[85vw]">
-          <img
-            src={current.src}
-            alt={current.alt}
-            className="max-h-[80vh] max-w-full object-contain border-2 border-white shadow-brutal-lg"
-          />
-          {current.caption && (
-            <p className="text-white text-sm mt-3 font-medium tracking-wide">{current.caption}</p>
-          )}
-          <p className="text-white/50 text-xs mt-1">{currentIndex + 1} / {images.length}</p>
+          <img src={current.src} alt={current.cap}
+            className="max-h-[82vh] max-w-full object-contain" />
+          <div className="flex items-center gap-4 mt-4">
+            <div className="rule-gold" />
+            <span className="text-overline text-cream/40 tracking-widest">{current.cap}</span>
+            <span className="text-cream/20 font-sans text-xs">{currentIndex+1} / {images.length}</span>
+          </div>
         </div>
 
-        {/* Next */}
-        <button onClick={onNext} aria-label="Next image"
-          className="flex-shrink-0 w-11 h-11 bg-white border-2 border-brown flex items-center justify-center
-                     hover:bg-rose-pale transition-colors hover:translate-x-0.5 hover:shadow-brutal">
-          <i className="fas fa-chevron-right text-brown" />
+        <button onClick={onNext} aria-label="Next"
+          className="flex-shrink-0 w-11 h-11 border border-cream/15 flex items-center justify-center
+                     text-cream/40 hover:text-gold hover:border-gold transition-all duration-300">
+          <i className="fas fa-chevron-right text-sm" />
         </button>
       </div>
     </>

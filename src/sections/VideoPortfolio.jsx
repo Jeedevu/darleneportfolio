@@ -1,101 +1,86 @@
 import { useState } from 'react'
-import { VIDEO_PLACEHOLDERS } from '../data/content'
 import VideoModal from '../components/VideoModal'
 
-const VIDEO_FILTERS = [
-  { key: 'all', label: 'All Videos' },
-  { key: 'ugc', label: 'UGC & Products' },
-  { key: 'beauty', label: 'Beauty' },
-  { key: 'fashion', label: 'Fashion' },
-  { key: 'home', label: 'Home & Kitchen' },
-  { key: 'lifestyle', label: 'Lifestyle' },
+const FILTERS = ['All','UGC & Products','Beauty','Fashion','Home & Kitchen','Lifestyle']
+
+const VIDEOS = [
+  { id:'VIDEO_ID_1', platform:'youtube', cat:'UGC & Products',  tag:'UGC & Products',   title:'Product Demonstration',  desc:'Authentic product unboxing and first impression.',        thumb:'/images/IMG_4643.JPEG' },
+  { id:'VIDEO_ID_2', platform:'youtube', cat:'Beauty',          tag:'Beauty & Skincare', title:'Beauty Routine Feature', desc:'Skincare and beauty product application.',                thumb:'/images/IMG_5340.JPEG' },
+  { id:'VIDEO_ID_3', platform:'youtube', cat:'Fashion',         tag:'Fashion & Shopping',title:'Outfit & Style Feature',  desc:'Styling and apparel showcase.',                           thumb:'/images/IMG_5338.JPEG' },
+  { id:'VIDEO_ID_4', platform:'youtube', cat:'Home & Kitchen',  tag:'Home & Kitchen',    title:'Kitchen Product Demo',   desc:'Practical household product demonstration.',              thumb:'/images/IMG_3885.JPEG' },
+  { id:'VIDEO_ID_5', platform:'youtube', cat:'Lifestyle',       tag:'Lifestyle',         title:'Day in the Life',         desc:'Relatable everyday content and personal storytelling.',   thumb:'/images/denim pic.JPEG' },
+  { id:'VIDEO_ID_6', platform:'youtube', cat:'UGC & Products',  tag:'Commercial & Brand',title:'Brand Testimonial',       desc:'Product testimonial and brand storytelling.',             thumb:'/images/IMG_5817.JPEG' },
 ]
 
 export default function VideoPortfolio() {
-  const [filter, setFilter] = useState('all')
-  const [activeVideo, setActiveVideo] = useState(null)
+  const [filter,  setFilter]  = useState('All')
+  const [active,  setActive]  = useState(null)
 
-  const filtered = filter === 'all' ? VIDEO_PLACEHOLDERS : VIDEO_PLACEHOLDERS.filter(v => v.category === filter)
+  const filtered = filter === 'All' ? VIDEOS : VIDEOS.filter(v => v.cat === filter)
 
   return (
-    <section id="video-portfolio" className="bg-[#FAF6EF] border-b-2 border-brown py-24">
-      <div className="max-w-[1200px] mx-auto px-6">
-        <div className="text-center mb-10">
-          <span className="section-label mb-4 block w-fit mx-auto">Video Work</span>
-          <h2 className="section-heading mb-4">Watch My Work</h2>
-          <p className="text-taupe max-w-2xl mx-auto leading-relaxed">
-            Video is one of the most powerful ways to communicate a product's value. My work combines natural
-            on-camera delivery, relatable storytelling, product demonstrations, and lifestyle content.
+    <section id="video-portfolio" className="bg-blush relative overflow-hidden py-section">
+      <span className="watermark watermark-dark bottom-0 right-[-2%] pointer-events-none z-0" aria-hidden="true">VIDEO</span>
+
+      <div className="relative z-10 max-w-[1340px] mx-auto px-6 lg:px-10">
+
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
+          <div>
+            <span className="overline-label mb-5 block" style={{color:'#1F1A17',opacity:.55}}>Video Work</span>
+            <h2 className="heading-section text-espresso">
+              Watch My <em className="font-script not-italic text-choco">Work</em>
+            </h2>
+          </div>
+          <p className="text-espresso/50 font-sans font-light max-w-xs leading-relaxed">
+            Natural on-camera delivery, relatable storytelling, and lifestyle content that converts.
           </p>
         </div>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-2 justify-center mb-8">
-          {VIDEO_FILTERS.map(f => (
-            <button key={f.key} onClick={() => setFilter(f.key)}
-              className={`text-[0.8rem] font-semibold px-4 py-2 border-2 border-brown shadow-brutal transition-all duration-150
-                hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-brutal-lg
-                ${filter === f.key ? 'bg-rose text-white' : 'bg-white text-brown'}`}>
-              {f.label}
+        <div className="flex flex-wrap gap-2 mb-10">
+          {FILTERS.map(f => (
+            <button key={f} onClick={() => setFilter(f)}
+              className={`text-overline font-sans uppercase tracking-[0.18em] px-5 py-2.5 transition-all duration-300
+                ${filter === f ? 'bg-espresso text-cream' : 'border border-espresso/15 text-espresso/50 hover:text-espresso hover:border-espresso/40'}`}>
+              {f}
             </button>
           ))}
         </div>
 
-        {/* Video Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filtered.map((vid, i) => {
-            const thumb = vid.platform === 'youtube' && !vid.id.startsWith('VIDEO_ID')
-              ? `https://img.youtube.com/vi/${vid.id}/maxresdefault.jpg`
-              : null
-
-            return (
-              <div key={i} className="card-brutal bg-white overflow-hidden group">
-                {/* Thumbnail */}
-                <div className="relative aspect-video overflow-hidden cursor-pointer bg-beige"
-                  onClick={() => setActiveVideo(vid)}>
-                  {thumb ? (
-                    <img src={thumb} alt={vid.title} className="w-full h-full object-cover group-hover:scale-[1.04] group-hover:brightness-90 transition-all duration-400" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-rose-pale to-beige">
-                      <div className="text-center">
-                        <i className="fas fa-video text-3xl text-rose mb-2 block" />
-                        <p className="text-xs text-taupe font-medium">Video Coming Soon</p>
-                      </div>
-                    </div>
-                  )}
-                  {/* Play button */}
-                  <button
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 bg-rose border-2 border-brown shadow-brutal
-                               flex items-center justify-center text-white hover:bg-brown hover:scale-110 transition-all duration-150"
-                    aria-label={`Play ${vid.title}`}
-                    onClick={() => setActiveVideo(vid)}
-                  >
-                    <i className="fas fa-play text-base" aria-hidden="true" />
-                  </button>
+        {/* Video grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filtered.map((vid, i) => (
+            <div key={i} className="group cursor-pointer" onClick={() => setActive(vid)}>
+              {/* Thumbnail */}
+              <div className="relative aspect-[9/16] sm:aspect-video overflow-hidden bg-espresso-light img-zoom mb-4">
+                <img src={vid.thumb} alt={vid.title}
+                  className="w-full h-full object-cover object-top" loading="lazy" />
+                <div className="absolute inset-0 bg-espresso/30 group-hover:bg-espresso/60 transition-all duration-500 flex items-center justify-center">
+                  <div className="w-16 h-16 rounded-full bg-cream/10 backdrop-blur-sm border border-cream/30
+                                  flex items-center justify-center group-hover:scale-110 transition-transform duration-400">
+                    <i className="fas fa-play text-cream text-lg ml-1" />
+                  </div>
                 </div>
-                {/* Info */}
-                <div className="p-5">
-                  <span className="inline-block text-[0.62rem] font-bold tracking-widest uppercase text-rose bg-rose-pale border-2 border-brown px-2 py-1 mb-3">
-                    {vid.tag}
-                  </span>
-                  <h3 className="font-serif font-bold text-brown text-[1rem] mb-1">{vid.title}</h3>
-                  <p className="text-[0.83rem] text-taupe leading-relaxed">{vid.desc}</p>
-                </div>
+                <span className="absolute bottom-3 left-3 bg-espresso/80 text-gold text-[0.58rem] font-sans uppercase tracking-widest px-2.5 py-1">
+                  {vid.tag}
+                </span>
               </div>
-            )
-          })}
+              <h3 className="font-display font-bold text-espresso text-lg mb-1 group-hover:text-choco transition-colors duration-300">
+                {vid.title}
+              </h3>
+              <p className="text-espresso/50 font-sans font-light text-sm">{vid.desc}</p>
+            </div>
+          ))}
         </div>
 
-        <div className="text-center mt-10">
-          <a href="#contact"
-            onClick={e => { e.preventDefault(); const el = document.querySelector('#contact'); if(el) window.scrollTo({top: el.offsetTop-74, behavior:'smooth'}) }}
-            className="btn-primary">Discuss a Video Project</a>
+        <div className="text-center mt-14">
+          <button onClick={() => { const el=document.querySelector('#contact'); if(el) window.scrollTo({top:el.offsetTop-72,behavior:'smooth'}) }}
+            className="btn-dark">Discuss a Video Project</button>
         </div>
       </div>
 
-      {activeVideo && (
-        <VideoModal videoId={activeVideo.id} platform={activeVideo.platform} onClose={() => setActiveVideo(null)} />
-      )}
+      {active && <VideoModal videoId={active.id} platform={active.platform} onClose={() => setActive(null)} />}
     </section>
   )
 }
